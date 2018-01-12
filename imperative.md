@@ -1,5 +1,6 @@
 
-##Inference + training together (using imperative fluid)
+## Inference + training together (using imperative fluid)
+
 Looking at #7464 , let's try to come up with an example in fluid, which potentially might support online training and inference: 
 
 ```python

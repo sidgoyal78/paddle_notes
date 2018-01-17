@@ -14,7 +14,7 @@ If we look at an existing training and inference example in fluid for example [r
 The ProgramDesc obtained from the `default_main_program()` basically represents the neural network during the training phase. However, for testing/inference phase, as in the above example, we `prune()` and `inference_optimize()` the original ProgramDesc, to prune out irrelevant operators and obtain a ProgramDesc (in the `inference_program`) which is suitable for inference. (For more details, see implementation: [link](https://github.com/PaddlePaddle/Paddle/blob/e445b3ff20f0c568b7d01ed91cbd154c745e124c/paddle/framework/prune.cc)). To simplify the writing, we call the first ProgramDesc as "training ProgramDesc" and the latter one as "inference ProgramDesc". An important thing to note is that "inference ProgramDesc" has lesser information that the "training ProgramDesc" as we prune out operators which aren't required for inference.
 
 ### Approach 1: Use inference ProgramDesc 
-Under the subsection [inference-program](https://github.com/Xreki/Paddle/blob/acd813127c13f94bf98372215c96f5cf676a649c/doc/design/inference.md#inference-program), it is proposed that the "protobof message of the `main_program` is saved using `fluid.io.save_inference_model`." 
+Under the subsection [inference-program](https://github.com/Xreki/Paddle/blob/acd813127c13f94bf98372215c96f5cf676a649c/doc/design/inference.md#inference-program) of the PR 7315, it is proposed that the "protobof message of the `main_program` is saved using `fluid.io.save_inference_model`." 
 
 Based on the current implementation of `fluid.io.save_inference_model`, we observe that "inference ProgramDesc" is stored (in addition to model parameters). Now, there are again two options:
 

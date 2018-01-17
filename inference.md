@@ -4,7 +4,10 @@
 
 Please refer to Xreki's excellent PR [#7315](https://github.com/PaddlePaddle/Paddle/pull/7315) to get an overview of the design of Inference Engine.
 
-The design of inference engine depends on how we store the protobuf message of the ProgramDesc of the `main_program` in fluid. The aim of this document is to look at 2 different approaches of doing the same, and evaluate some of the pros and cons of each approach.
+The design of inference engine depends on:
+> how we store the protobuf message of the ProgramDesc of the `main_program` in fluid. 
+
+The aim of this document is to look at 2 different approaches of doing the same, and evaluate some of the pros and cons of each approach.
 
 If we look at an existing training and inference example in fluid for example [recognize_digits](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/fluid/tests/book/test_recognize_digits_mlp.py), we see that there are two objects of the [Program class](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/fluid/framework.py#L786) in Python, each of which has a ProgramDesc as its member. 
 

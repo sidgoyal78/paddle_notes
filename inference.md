@@ -7,7 +7,7 @@ Please refer to Xreki's excellent PR [#7315](https://github.com/PaddlePaddle/Pad
 The design of inference engine depends on:
 > how we store the protobuf message of the ProgramDesc of the `main_program` in fluid. 
 
-The aim of this document is to look at 2 different approaches of doing the same, and evaluate some of the pros and cons of each approach.
+The aim of this document is to look at two different approaches for doing it, and evaluate some of the pros and cons of each approach.
 
 If we look at an existing training and inference example in fluid for example [recognize_digits](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/fluid/tests/book/test_recognize_digits_mlp.py), we see that there are two objects of the [Program class](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/fluid/framework.py#L786) in Python, each of which has a ProgramDesc as its member. 
 
@@ -18,14 +18,14 @@ Under the subsection [inference-program](https://github.com/Xreki/Paddle/blob/ac
 
 Based on the current implementation of `fluid.io.save_inference_model`, we observe that "inference ProgramDesc" is stored (in addition to model parameters). Now, there are again two options:
 
-1. We can modify the current implementation to save the inference ProgramDesc which will have `feed` and `fetch` operators as well (which isn't done in the current implementation). This has the benefit that the user who wants to do inference, doesn't need to worry about providing feed and fetch lists.
+1. We can modify the current implementation to save the inference ProgramDesc which will have `feed` and `fetch` operators as well (which isn't done in the current implementation). This has the benefit that the user who wants to do inference, doesn't need to worry about providing feed and fetch lists to the Inference engine API.
 
-2. We use the current implmentation as is, and save the inference ProgramDesc without `feed` and `fetch` operators. Here, the user must provide feed and fetch lists as input.
+2. We use the current implmentation as is, and save the inference ProgramDesc without `feed` and `fetch` operators. Here, the user must provide feed and fetch lists as input to the Inference engine API.
 
 However, the main drawback of both of the above options and saving inference ProgramDesc is that we will need to have extra provisions to allow online training. More specifically, we will need to also save the "training ProgramDesc" and read it additionally to support online training. Moreover, we might face issues related to parameter sharing  when we want to do both inference and also modify the parameters. 
 
 ### Approach 2: Use training ProgramDesc 
 
-To address the limitation of the first approach, at the cost of extra computation, is to save the "training ProgramDesc".  In order to do inference, we can perform pruning and optimization on this ProgramDesc to obtain the "inference ProgramDesc". However, in order to do the pruning, we will need the user to specify feed and fetch lists.
+To address the limitation of the first approach, at the cost of extra computation, is to save the "training ProgramDesc".  In order to do inference, we can perform pruning and optimization on this ProgramDesc to obtain the "inference ProgramDesc". However, in order to do the pruning, we will need the user to specify feed and fetch lists to the Inference engine.
 
 Even though we will have to perform pruning on the "training ProgramDesc" in the Inference Engine, we will still be able to support online training, as we won't have to worry about saving/reading an additional "training ProgramDesc". 

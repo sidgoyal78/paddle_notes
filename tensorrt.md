@@ -3,7 +3,7 @@
 
 The main goal is to come up with an approach for integrating TensorRT with PaddlePaddle's inference library. We want to do this in order to use TensorRT for performing inference on a model saved using Fluid.
 
-To address this, we will first briefly discuss TensorRT, and the functionalities offered by TensorRT, before finally concluding.
+To address this, we will first briefly discuss TensorRT, and the functionalities offered by TensorRT, before finally proposing our first attempt.
 
 ## TensorRT 
 
@@ -15,7 +15,7 @@ TensorRT is deep learning inference optimizer and runtime from Nvidia, aimed at 
 
 #### Build phase
 
-This step is performed only once, prior to deployment. A "trained model" tranined using any popular deep learning framework has to be first parsed using TensorRT, and imported to the TensorRT Optimizer module. The TensorRT Optimizer performs several optimizations (briefly discussed below) and outputs an optimized inference execution engine. This execution engine when serialized to a file on disk is known as *plan* file.
+This step is performed only once, prior to deployment. A "trained model" trained using any popular deep learning framework has to be first parsed using TensorRT, and imported to the TensorRT Optimizer module. The TensorRT Optimizer performs several optimizations (briefly discussed below) and outputs an optimized inference execution engine. This execution engine when serialized to a file on disk is known as *plan* file.
 
 The crucial part here is importing a trained model. For Caffe and Tensorflow, TensorRT provides simple Python and C++ APIs to import the models directly. However, for other frameworks, we need to use TensorRT's Network Definition API to specify the network description (either in C++ or Python), before loading it into TensorRT.
 
@@ -24,7 +24,7 @@ An image summarizing this phase is: https://devblogs.nvidia.com/wp-content/uploa
 
 The various optimizations performed by the TensorRT Optimizer are:
 - Graph optimizations are performed to restructure the graph by doing layer and tensor fusion.
-- FP16 and INT8 percision caliberation is supported to convert FP32 to lower precision.
+- FP16 and INT8 precision calibration is supported to convert FP32 to lower precision.
 - Kernel auto tuning is performed to choose the best implementation of kernels from a library of kernels, for the given input data size, layout, etc.
 - Reduction of memory footprint, by reusing memory for each tensor.
 
@@ -35,7 +35,7 @@ In this phase, the saved *plan* file is loaded and deserialized to create a Tens
 
 ## Our approach
 
-As discussed in the "build phase" subsection, the most important point for our usecase is: to import a model into TensorRT that is trained using PaddlePaddle fluid. 
+As discussed in the "build phase" subsection, the most important point for our use case is: to import a model into TensorRT that is trained using PaddlePaddle fluid. 
 
 From the documentation, we find that networks from other frameworks (except Caffe and Tensorflow) via the UFF format. The UFF: Universal Framework Format is a data format that describes an execution graph for a deep network.
 The format consists of syntax for serialization format and definition of each operators (as protobuf and python descriptors respectively).

@@ -1,11 +1,11 @@
 
-### Problem description
+## Problem description
 
 The main goal is to come up with an approach for integrating TensorRT with PaddlePaddle's inference library. We want to do this in order to use TensorRT for performing inference on a model saved using Fluid.
 
 To address this, we will first briefly discuss TensorRT, and the functionalities offered by TensorRT, before finally concluding.
 
-### TensorRT 
+## TensorRT 
 
 #### Introduction
 
@@ -33,7 +33,7 @@ The various optimizations performed by the TensorRT Optimizer are:
 In this phase, the saved *plan* file is loaded and deserialized to create a TensorRT Runtime engine object and used to perform inference on new data.
 
 
-### Our approach
+## Our approach
 
 As discussed in the "build phase" subsection, the most important point for our usecase is: to import a model into TensorRT that is trained using PaddlePaddle fluid. 
 
@@ -48,7 +48,7 @@ Regarding current support of ONNX with TensorRT:
 
 Thus, we think it is reasonable to come up with a custom converter that imports fluid's model into TensorRT (using the C++ API).
 
-### References:
+## References:
 
 - TensorRT 3.0 developer guide: http://docs.nvidia.com/deeplearning/sdk/pdf/TensorRT-Developer-Guide.pdf
 - TensorRT blog discussing the optimizations in build phase: https://devblogs.nvidia.com/tensorrt-3-faster-tensorflow-inference/

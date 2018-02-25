@@ -1,9 +1,16 @@
+## Task
+
 We benchmark the inference unit-test corresponding the the "recognize_digits" example. Basically the architecture consists of conv2d, pool2d, and fc layers.
 
+
+## Hardware specification
 We use a machine with the following specification:
 - CPU: Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz
 - GPU: GeForce GTX 1080 Ti GPU card.
 - Code: PR https://github.com/PaddlePaddle/Paddle/pull/8497
+
+
+## Total time
 
 We first look at the total time for doing inference for both CPU and GPU with different batch-sizes. The important point to note here are: 
 - For GPU timings, only the operators run on GPU and for the total time we use the CPU time. We look at individual time of ops later.
@@ -16,6 +23,8 @@ We first look at the total time for doing inference for both CPU and GPU with di
 |CPU| 1.29664 | 2.30658 | 3.84233 | 10.4951  | 20.8305  |  26.2213 |  49.6337 |
 |GPU| 2.66379 | 2.81712 | 2.85527 |  2.39371 |  2.39629 |   2.1023 |   2.4629 |
 
+
+## Time for individual ops
 
 We then look at the time for individual ops and compare both CPU and GPU, for each minibatch size.
 

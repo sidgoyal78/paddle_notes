@@ -1,6 +1,6 @@
 ## Task
 
-We benchmark the inference unit-test corresponding the the "recognize_digits" example. Basically the architecture consists of conv2d, pool2d, and fc layers.
+We benchmark the inference unit-test corresponding to the "recognize_digits" example. Basically, the architecture consists of conv2d, pool2d, and fc layers.
 
 
 ## Hardware specification
@@ -12,10 +12,11 @@ We use a machine with the following specification:
 
 ## Total time
 
-We first look at the total time for doing inference for both CPU and GPU with different batch-sizes. The important point to note here are: 
+We first look at the total time for doing inference for both CPU and GPU, with different batch-sizes. The important point to note here are: 
 - For GPU timings, only the operators run on GPU and for the total time we use the CPU time. We look at individual time of ops later.
-- We don't consider the time to setup the inputs, however, we have the data for that well separately.
+- We don't consider the time to setup the inputs, however, we have the data for that separately.
 - All times are in ms (millisecond)
+- Each value presented below, represents the average value averaged over 10 independent runs.
 
 
 |   |    mb=1 |    mb=2 |    mb=8 |    mb=32 |    mb=64 |   mb=128 |   mb=256 |
